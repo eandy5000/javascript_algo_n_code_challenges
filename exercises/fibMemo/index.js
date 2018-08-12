@@ -7,6 +7,20 @@
 // forms the first ten entries of the fibonacci series.
 // Example:
 //   fib(4) === 3
+function memo(fn) {
+  const cache = {};
+  return function(...args) {
+    console.log("cache ", cache);
+
+    if (cache[args]) {
+      return cache[args];
+    } else {
+      const out = fn.apply(this, args);
+      cache[args] = out;
+      return out;
+    }
+  };
+}
 
 function fib(n) {
   if (n < 2) {
@@ -16,7 +30,11 @@ function fib(n) {
   }
 }
 
+fib = memo(fib);
+
 module.exports = fib;
+
+// console.log(fib(40));
 
 // function fib(n) {
 //   const arr = [0, 1];
